@@ -48,7 +48,7 @@ here we got a 11 different tests , contain all possible inputs that can a user e
 - check if we entered a 0 before the width
 
 before each test we clean the (processed-images) folder so we can test the individual actions and see how the code will handle those actions , we used jasmine framework and superset library for writing the tests
-![image for the tests](./images/Screenshot%202png.png.png)
+![image for the tests](./images/Screenshot%202png.png)
 
 ---
 
