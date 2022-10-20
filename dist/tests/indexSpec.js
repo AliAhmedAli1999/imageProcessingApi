@@ -17,7 +17,7 @@ const __1 = require("..");
 const __2 = require("..");
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
-const requset = (0, supertest_1.default)(__1.app);
+const request = (0, supertest_1.default)(__1.app);
 describe("testing our endpoints", () => {
     beforeEach(() => {
         const directory = path_1.default.resolve("./processed-images");
@@ -32,50 +32,50 @@ describe("testing our endpoints", () => {
             }
         });
     });
-    it("cheak  if the api is working", () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield requset.get("/image?name=santamonica&width=800&height=120");
+    it("check  if the api is working", () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield request.get("/image?name=santamonica&width=800&height=120");
         expect(response.status).toBe(200);
     }));
-    it("cheak if the image exsits", () => __awaiter(void 0, void 0, void 0, function* () {
-        yield requset.get("/image?name=fjord");
+    it("check if the image exists", () => __awaiter(void 0, void 0, void 0, function* () {
+        yield request.get("/image?name=fjord");
         expect(__2.status.exsit).toBe(true);
     }));
-    it("cheak if the image does not exsit", () => __awaiter(void 0, void 0, void 0, function* () {
-        yield requset.get("/image?name=f2jord");
+    it("check if the image does not exists", () => __awaiter(void 0, void 0, void 0, function* () {
+        yield request.get("/image?name=f2jord");
         expect(__2.status.exsit).toBe(false);
     }));
-    it("cheak if the image processed before", () => __awaiter(void 0, void 0, void 0, function* () {
-        yield requset.get("/image?name=fjord&width=200&height=440");
-        yield requset.get("/image?name=fjord&width=200&height=440");
+    it("check if the image processed before", () => __awaiter(void 0, void 0, void 0, function* () {
+        yield request.get("/image?name=fjord&width=200&height=440");
+        yield request.get("/image?name=fjord&width=200&height=440");
         expect(__2.status.processed).toBe(true);
     }));
-    it("cheak if the image processed before but with diffrent dimensions", () => __awaiter(void 0, void 0, void 0, function* () {
-        yield requset.get("/image?name=fjord&width=200&height=440");
-        yield requset.get("/image?name=fjord&width=200&height=450");
+    it("check if the image processed before but with different dimensions", () => __awaiter(void 0, void 0, void 0, function* () {
+        yield request.get("/image?name=fjord&width=200&height=440");
+        yield request.get("/image?name=fjord&width=200&height=450");
         expect(__2.status.processed).toBe(false);
     }));
-    it("cheak if the process successed and the new image is created ", () => __awaiter(void 0, void 0, void 0, function* () {
-        yield requset.get("/image?name=fjord&width=200&height=440");
+    it("check if the process succeeded and the new image is created ", () => __awaiter(void 0, void 0, void 0, function* () {
+        yield request.get("/image?name=fjord&width=200&height=440");
         expect(__2.status.successed).toBe(true);
     }));
-    it("cheak if we enterd invalid width", () => __awaiter(void 0, void 0, void 0, function* () {
-        yield requset.get("/image?name=fjord&width=200d&height=40");
+    it("check if we entered invalid width", () => __awaiter(void 0, void 0, void 0, function* () {
+        yield request.get("/image?name=fjord&width=200d&height=40");
         expect(__2.status.successed).toBe(false);
     }));
-    it("cheak if we enterd invalid height", () => __awaiter(void 0, void 0, void 0, function* () {
-        yield requset.get("/image?name=fjord&width=200&height=4s0");
+    it("check if we entered invalid height", () => __awaiter(void 0, void 0, void 0, function* () {
+        yield request.get("/image?name=fjord&width=200&height=4s0");
         expect(__2.status.successed).toBe(false);
     }));
-    it("cheak if we enterd invalid height and width", () => __awaiter(void 0, void 0, void 0, function* () {
-        yield requset.get("/image?name=fjord&width=20d0&height=4s0");
+    it("check if we entered invalid height and width", () => __awaiter(void 0, void 0, void 0, function* () {
+        yield request.get("/image?name=fjord&width=20d0&height=4s0");
         expect(__2.status.successed).toBe(false);
     }));
-    it("cheak if we enterd negative width", () => __awaiter(void 0, void 0, void 0, function* () {
-        yield requset.get("/image?name=fjord&width=20d0&height=-40");
+    it("check if we entered negative width", () => __awaiter(void 0, void 0, void 0, function* () {
+        yield request.get("/image?name=fjord&width=20d0&height=-40");
         expect(__2.status.successed).toBe(false);
     }));
-    it("cheak if we enterd a 0 before the  width", () => __awaiter(void 0, void 0, void 0, function* () {
-        yield requset.get("/image?name=fjord&width=200&height=040");
+    it("check if we entered a 0 before the  width", () => __awaiter(void 0, void 0, void 0, function* () {
+        yield request.get("/image?name=fjord&width=200&height=040");
         expect(__2.status.successed).toBe(true);
     }));
 });
