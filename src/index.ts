@@ -3,7 +3,6 @@ import express from "express";
 import cheakIfExist from "./middlewares/cheakIfExist.middleware";
 import cheakIfProcessed from "./middlewares/cheakIfProcessed";
 import processImage from "./middlewares/processImage.middleware";
-import { resolve } from "path";
 
 // making an express application object
 
@@ -11,24 +10,13 @@ const app = express();
 const port = 5000;
 
 const status = {
-  exsit: true,
-  processed: true,
-  successed: true,
+  exsit: false,
+  processed: false,
+  successed: false,
 };
 // define a route handler
-app.get("/image", cheakIfExist, cheakIfProcessed, processImage, (req, res) => {
-  if (
-    req.query.status === "successed" ||
-    req.query.status === "image was prosseced before"
-  ) {
-    res.sendFile(
-      resolve(
-        `./processed-images/${req.query.name}_${req.query.width}_${req.query.height}.jpg`
-      )
-    );
-  } else {
-    res.send(req.query.status);
-  }
+app.get("/image", cheakIfExist, cheakIfProcessed, processImage, () => {
+  console.log("finshed");
 });
 
 // start the express server

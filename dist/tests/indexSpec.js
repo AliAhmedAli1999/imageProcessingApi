@@ -49,7 +49,7 @@ describe("testing our endpoints", () => {
         yield requset.get("/image?name=fjord&width=200&height=440");
         expect(__2.status.processed).toBe(true);
     }));
-    it("cheak if the image processed before but with diffrent dimansions", () => __awaiter(void 0, void 0, void 0, function* () {
+    it("cheak if the image processed before but with diffrent dimensions", () => __awaiter(void 0, void 0, void 0, function* () {
         yield requset.get("/image?name=fjord&width=200&height=440");
         yield requset.get("/image?name=fjord&width=200&height=450");
         expect(__2.status.processed).toBe(false);
@@ -62,12 +62,20 @@ describe("testing our endpoints", () => {
         yield requset.get("/image?name=fjord&width=200d&height=40");
         expect(__2.status.successed).toBe(false);
     }));
-    it("cheak if we enterd invalid heigt", () => __awaiter(void 0, void 0, void 0, function* () {
+    it("cheak if we enterd invalid height", () => __awaiter(void 0, void 0, void 0, function* () {
         yield requset.get("/image?name=fjord&width=200&height=4s0");
         expect(__2.status.successed).toBe(false);
     }));
-    it("cheak if we enterd invalid heigt and width", () => __awaiter(void 0, void 0, void 0, function* () {
+    it("cheak if we enterd invalid height and width", () => __awaiter(void 0, void 0, void 0, function* () {
         yield requset.get("/image?name=fjord&width=20d0&height=4s0");
         expect(__2.status.successed).toBe(false);
+    }));
+    it("cheak if we enterd negative width", () => __awaiter(void 0, void 0, void 0, function* () {
+        yield requset.get("/image?name=fjord&width=20d0&height=-40");
+        expect(__2.status.successed).toBe(false);
+    }));
+    it("cheak if we enterd a 0 before the  width", () => __awaiter(void 0, void 0, void 0, function* () {
+        yield requset.get("/image?name=fjord&width=200&height=040");
+        expect(__2.status.successed).toBe(true);
     }));
 });

@@ -12,14 +12,12 @@ next) => {
     const name = req.query.name;
     const path = (0, path_1.resolve)(`./images/${name}.jpg`);
     if (fs_1.default.existsSync(path)) {
-        req.query.Exist = "true";
         index_1.status.exsit = true;
+        next();
     }
     else {
-        req.query.Exist = "false";
-        req.query.status = "Error, image does not exsit";
         index_1.status.exsit = false;
+        res.send("the image is not found ");
     }
-    next();
 };
 exports.default = cheakIfExist;

@@ -16,26 +16,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = require("path");
 const sharp_1 = __importDefault(require("sharp"));
 const __1 = require("..");
-const processImage = (req, res, 
-// eslint-disable-next-line @typescript-eslint/ban-types
-next) => __awaiter(void 0, void 0, void 0, function* () {
-    if (req.query.processed == "false") {
-        const name = req.query.name;
-        const width = Number(req.query.width);
-        const height = Number(req.query.height);
-        if (isNaN(width) || isNaN(height)) {
-            req.query.status = `the ${isNaN(width) ? "width" : "height"} is not a valid value`;
-            __1.status.successed = false;
-            next();
-        }
-        else {
-            const imagePath = (0, path_1.resolve)(`./images/${name}.jpg`);
-            const processedImagePath = (0, path_1.resolve)(`./processed-images/${name}_${width}_${height}.jpg`);
-            yield (0, sharp_1.default)(imagePath).resize(width, height).toFile(processedImagePath);
-            req.query.status = "successed";
-            __1.status.successed = true;
-        }
+const processImage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const name = req.query.name;
+    const width = +Number(req.query.width);
+    const height = +Number(req.query.height);
+    if (isNaN(width) || isNaN(height) || width < 0 || height < 0) {
+        req.query.status = `the ${isNaN(width) ? "width" : "height"} is not a valid value`;
+        __1.status.successed = false;
+        res.send(req.query.status);
     }
-    next();
+    else {
+        const imagePath = (0, path_1.resolve)(`./images/${name}.jpg`);
+        const processedImagePath = (0, path_1.resolve)(`./processed-images/${name}_${width}_${height}.jpg`);
+        yield (0, sharp_1.default)(imagePath).resize(width, height).toFile(processedImagePath);
+        res.sendFile((0, path_1.resolve)(`./processed-images/${req.query.name}_${width}_${height}.jpg`));
+        __1.status.successed = true;
+    }
 });
 exports.default = processImage;

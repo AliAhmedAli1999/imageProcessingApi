@@ -9,21 +9,19 @@ const index_1 = require("../index");
 const cheakIfProcessed = (req, res, 
 // eslint-disable-next-line @typescript-eslint/ban-types
 next) => {
-    if (req.query.Exist === "true") {
-        const name = req.query.name;
-        const width = req.query.width;
-        const height = req.query.height;
-        const path = (0, path_1.resolve)(`./processed-images/${name}_${width}_${height}.jpg`);
-        if (fs_1.default.existsSync(path)) {
-            req.query.processed = "true";
-            req.query.status = "image was prosseced before";
-            index_1.status.processed = true;
-        }
-        else {
-            req.query.processed = "false";
-            index_1.status.processed = false;
-        }
+    const name = req.query.name;
+    const width = +Number(req.query.width);
+    const height = +Number(req.query.height);
+    const path = (0, path_1.resolve)(`./processed-images/${name}_${width}_${height}.jpg`);
+    if (fs_1.default.existsSync(path)) {
+        req.query.processed = "true";
+        req.query.status = "image was prosseced before";
+        index_1.status.processed = true;
+        res.sendFile((0, path_1.resolve)(`./processed-images/${req.query.name}_${req.query.width}_${req.query.height}.jpg`));
     }
-    next();
+    else {
+        index_1.status.processed = false;
+        next();
+    }
 };
 exports.default = cheakIfProcessed;

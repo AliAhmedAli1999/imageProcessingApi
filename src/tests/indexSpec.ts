@@ -38,7 +38,7 @@ describe("testing our endpoints", () => {
     await requset.get("/image?name=fjord&width=200&height=440");
     expect(status.processed).toBe(true);
   });
-  it("cheak if the image processed before but with diffrent dimansions", async () => {
+  it("cheak if the image processed before but with diffrent dimensions", async () => {
     await requset.get("/image?name=fjord&width=200&height=440");
     await requset.get("/image?name=fjord&width=200&height=450");
     expect(status.processed).toBe(false);
@@ -51,12 +51,20 @@ describe("testing our endpoints", () => {
     await requset.get("/image?name=fjord&width=200d&height=40");
     expect(status.successed).toBe(false);
   });
-  it("cheak if we enterd invalid heigt", async () => {
+  it("cheak if we enterd invalid height", async () => {
     await requset.get("/image?name=fjord&width=200&height=4s0");
     expect(status.successed).toBe(false);
   });
-  it("cheak if we enterd invalid heigt and width", async () => {
+  it("cheak if we enterd invalid height and width", async () => {
     await requset.get("/image?name=fjord&width=20d0&height=4s0");
     expect(status.successed).toBe(false);
+  });
+  it("cheak if we enterd negative width", async () => {
+    await requset.get("/image?name=fjord&width=20d0&height=-40");
+    expect(status.successed).toBe(false);
+  });
+  it("cheak if we enterd a 0 before the  width", async () => {
+    await requset.get("/image?name=fjord&width=200&height=040");
+    expect(status.successed).toBe(true);
   });
 });

@@ -12,14 +12,12 @@ const cheakIfExist = (
   const name = req.query.name;
   const path = resolve(`./images/${name}.jpg`);
   if (fs.existsSync(path)) {
-    req.query.Exist = "true";
     status.exsit = true;
+    next();
   } else {
-    req.query.Exist = "false";
-    req.query.status = "Error, image does not exsit";
     status.exsit = false;
+    res.send("the image is not found ");
   }
-  next();
 };
 
 export default cheakIfExist;
