@@ -14,7 +14,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = require("path");
 const resizing_function_1 = __importDefault(require("../functions/resizing.function"));
-const processImage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const processImage = (req, res
+// eslint-disable-next-line @typescript-eslint/ban-types
+) => __awaiter(void 0, void 0, void 0, function* () {
     const name = String(req.query.name);
     const width = +Number(req.query.width);
     const height = +Number(req.query.height);

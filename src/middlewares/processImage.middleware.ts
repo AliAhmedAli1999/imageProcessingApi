@@ -4,7 +4,7 @@ import resizing from "../functions/resizing.function";
 
 const processImage = async (
   req: express.Request,
-  res: express.Response,
+  res: express.Response
   // eslint-disable-next-line @typescript-eslint/ban-types
 ): Promise<void> => {
   const name = String(req.query.name);
