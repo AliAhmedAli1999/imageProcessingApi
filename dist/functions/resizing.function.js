@@ -13,17 +13,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = require("path");
-const resizing_function_1 = __importDefault(require("../functions/resizing.function"));
-const processImage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const name = String(req.query.name);
-    const width = +Number(req.query.width);
-    const height = +Number(req.query.height);
-    try {
-        yield (0, resizing_function_1.default)(name, width, height);
-        res.sendFile((0, path_1.resolve)(`./processed-images/${req.query.name}_${width}_${height}.jpg`));
-    }
-    catch (err) {
-        res.send(err);
+const sharp_1 = __importDefault(require("sharp"));
+const fs_1 = __importDefault(require("fs"));
+const resizing = (name, width, height) => __awaiter(void 0, void 0, void 0, function* () {
+    const originalImage = (0, path_1.resolve)(`./images/${name}.jpg`);
+    if (!fs_1.default.existsSync(originalImage))
+        throw "the image does not exist"; //check first if the image exist
+    if (width <= 0 ||
+        height <= 0 ||
+        Object.is(width, NaN) ||
+        Object.is(height, NaN))
+        throw `invalid ${width <= 0 ? "width" : "height"}`; // check if the inputs are valid
+    const processedImagePath = (0, path_1.resolve)(`./processed-images/${name}_${width}_${height}.jpg`);
+    if (fs_1.default.existsSync(processedImagePath))
+        return true;
+    else {
+        yield (0, sharp_1.default)(originalImage).resize(width, height).toFile(processedImagePath);
+        return false;
     }
 });
-exports.default = processImage;
+exports.default = resizing;

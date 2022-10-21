@@ -1,33 +1,22 @@
 import express from "express";
-// import fs from "fs";
 import { resolve } from "path";
-import sharp from "sharp";
-import { status } from "..";
+import resizing from "../functions/resizing.function";
 
 const processImage = async (
   req: express.Request,
-  res: express.Response
+  res: express.Response,
+  // eslint-disable-next-line @typescript-eslint/ban-types
 ): Promise<void> => {
-  const name = req.query.name;
-
+  const name = String(req.query.name);
   const width = +Number(req.query.width);
   const height = +Number(req.query.height);
-  if (isNaN(width) || isNaN(height) || width < 0 || height < 0) {
-    req.query.status = `the ${
-      isNaN(width) ? "width" : "height"
-    } is not a valid value`;
-    status.successed = false;
-    res.send(req.query.status);
-  } else {
-    const imagePath = resolve(`./images/${name}.jpg`);
-    const processedImagePath = resolve(
-      `./processed-images/${name}_${width}_${height}.jpg`
-    );
-    await sharp(imagePath).resize(width, height).toFile(processedImagePath);
+  try {
+    await resizing(name, width, height);
     res.sendFile(
       resolve(`./processed-images/${req.query.name}_${width}_${height}.jpg`)
     );
-    status.successed = true;
+  } catch (err) {
+    res.send(err);
   }
 };
 

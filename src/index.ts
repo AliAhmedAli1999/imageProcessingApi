@@ -1,7 +1,5 @@
 // import necessary files
 import express from "express";
-import cheakIfExist from "./middlewares/cheakIfExist.middleware";
-import cheakIfProcessed from "./middlewares/cheakIfProcessed";
 import processImage from "./middlewares/processImage.middleware";
 
 // making an express application object
@@ -10,13 +8,13 @@ const app = express();
 const port = 5000;
 
 const status = {
-  exsit: false,
+  exist: false,
   processed: false,
-  successed: false,
+  succeeded: false,
 };
 // define a route handler
-app.get("/image", cheakIfExist, cheakIfProcessed, processImage, () => {
-  console.log("finshed");
+app.get("/image", processImage, (req, res) => {
+  res.end();
 });
 
 // start the express server

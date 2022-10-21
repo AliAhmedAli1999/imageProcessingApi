@@ -13,6 +13,8 @@ in this readme file we will walk through the code and the unit tests
 
 the code is going through 3 steps (3 middleware) from the moment we enter the endpoint in our browser
 
+our end point is /image?name=fjord&width=200&height=200
+
 ### check if the image is existing in first place
 
 we will check the name parameter in the endpoint and check if that name exist at our directory (images) if it's not we will stop the process and send a response with an error message specifying that the image does not exist

@@ -12,18 +12,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const path_1 = require("path");
-const resizing_function_1 = __importDefault(require("../functions/resizing.function"));
-const processImage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const name = String(req.query.name);
-    const width = +Number(req.query.width);
-    const height = +Number(req.query.height);
-    try {
-        yield (0, resizing_function_1.default)(name, width, height);
-        res.sendFile((0, path_1.resolve)(`./processed-images/${req.query.name}_${width}_${height}.jpg`));
-    }
-    catch (err) {
-        res.send(err);
-    }
+const fs_1 = __importDefault(require("fs"));
+const path_1 = __importDefault(require("path"));
+const removeAllFiles = (Path) => __awaiter(void 0, void 0, void 0, function* () {
+    const directory = path_1.default.resolve(Path);
+    fs_1.default.readdir(directory, (err, files) => {
+        if (err)
+            throw err;
+        for (const file of files) {
+            fs_1.default.unlink(path_1.default.join(directory, file), (err) => {
+                if (err)
+                    throw err;
+            });
+        }
+    });
 });
-exports.default = processImage;
+exports.default = removeAllFiles;
