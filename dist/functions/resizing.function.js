@@ -26,7 +26,7 @@ const resizing = (name, width, height) => __awaiter(void 0, void 0, void 0, func
         height <= 0 ||
         Object.is(width, NaN) ||
         Object.is(height, NaN))
-        throw `invalid ${(width <= 0) || (Object.is(width, NaN)) ? "width" : "height"}`; // check if the inputs are valid
+        throw `invalid ${width <= 0 || Object.is(width, NaN) ? "width" : "height"}`; // check if the inputs are valid
     const processedImagePath = (0, path_1.resolve)(`./processed-images/${name}_${width}_${height}.jpg`);
     if (fs_1.default.existsSync(processedImagePath))
         return true;

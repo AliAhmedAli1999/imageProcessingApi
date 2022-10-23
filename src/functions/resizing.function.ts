@@ -18,7 +18,7 @@ const resizing = async (
     Object.is(width, NaN) ||
     Object.is(height, NaN)
   )
-    throw `invalid ${(width <= 0)||( Object.is(width, NaN) ) ? "width" : "height"}`; // check if the inputs are valid
+    throw `invalid ${width <= 0 || Object.is(width, NaN) ? "width" : "height"}`; // check if the inputs are valid
   const processedImagePath = resolve(
     `./processed-images/${name}_${width}_${height}.jpg`
   );

@@ -6,12 +6,6 @@ import processImage from "./middlewares/processImage.middleware";
 
 const app = express();
 const port = 5000;
-
-const status = {
-  exist: false,
-  processed: false,
-  succeeded: false,
-};
 // define a route handler
 app.get("/image", processImage, (req, res) => {
   res.end();
@@ -22,4 +16,4 @@ app.listen(port, () => {
   console.log(`server started at http://localhost:${port}`);
 });
 
-export { app, status };
+export default app;

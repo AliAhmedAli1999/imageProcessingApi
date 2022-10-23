@@ -13,10 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
-const __1 = require("..");
+const __1 = __importDefault(require(".."));
 const resizing_function_1 = __importDefault(require("../functions/resizing.function"));
 const removeAllFiles_function_1 = __importDefault(require("../functions/removeAllFiles.function"));
-const request = (0, supertest_1.default)(__1.app);
+const request = (0, supertest_1.default)(__1.default);
 beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
     yield (0, removeAllFiles_function_1.default)("./processed-images");
 }));
